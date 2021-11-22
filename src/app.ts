@@ -1,18 +1,18 @@
-class Department {
+class Person {
     name: string;
     constructor(n: string) {
         this.name = n;
     }
+
+    describe(this: Person) {
+        console.log(`name - ${this.name}`);
+    }
 }
 
-const it = new Department('IT');
-console.log(it);
+const person = new Person('Nik Doe');
+console.log(person);
+person.describe();
 
-//////////short version
-
-// class Department {
-//     constructor(public name: string) {}
-// }
-//
-// const it = new Department('IT_DEV');
-// console.log(it);
+////////ПОЧЕМУ ЗДЕСЬ БУДЕТ ОШИБКА?
+// const personCopy = {describe: person.describe}
+// personCopy.describe();
