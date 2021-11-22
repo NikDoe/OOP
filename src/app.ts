@@ -1,34 +1,17 @@
-class ITDepartment {
-    name: string;
-    private employees: string[] = [];
+class Account {
+    readonly id: number;
 
-    constructor(n: string) {
-        this.name = n;
+    constructor(id: number) {
+        this.id = id;
     }
 
-    describe(this: ITDepartment) {
-        console.log(`name - ${this.name}`);
-    }
-
-    addNewEmployee(employee: string) {
-        this.employees.push(employee);
-    }
-
-    employeesInfo(){
-        console.log(this.employees.length);
-        console.log(this.employees);
+    describeAccount(){
+        // this.id = 'id2'; //ERROR - readonly модификтар
+        //обьяснить разницу межу readonly и private
+        console.log(`id: ${this.id}`);
     }
 }
 
-const newIt = new ITDepartment('IT');
-console.log(newIt);
-newIt.describe();
-
-newIt.addNewEmployee('Nik Doe');
-
-//рассказать про модификаторы: приватный, публичный
-// newIt.employees[1] = 'Max'; //ERROR - private модификтаор
-newIt.name = 'DUMMY';
-newIt.describe();
-
-newIt.employeesInfo();
+const acc = new Account(Date.now());
+console.log(acc);
+acc.describeAccount();
