@@ -1,33 +1,51 @@
-class Car {
-    readonly _sNumber: number;
+class MyDepartment {
+    private employees: string[] = [];
 
-    constructor(private _color: string, private _name: string) {
-        this._sNumber = Date.now();
+    constructor(private id: number, public name: string) {
     }
 
-    get sNumber(): number {
-        return this._sNumber;
+    describe(this: MyDepartment) {
+        console.log(`my department ${this.id} : ${this.name}`)
     }
 
-    get color(): string {
-        return this._color;
+    addEmployee(employee: string) {
+        this.employees.push(employee);
     }
 
-    set color(value: string) {
-        this._color = value;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-
-    set name(value: string) {
-        this._name = value;
+    printInfo() {
+        console.log(this.employees.length);
+        console.log(this.employees);
     }
 }
 
-const c = new Car('black', 'BMW');
-console.log(c);
-c.name = 'AUDI';
-c.color = 'grey';
-console.log(c);
+class MyITDepartment extends MyDepartment {
+    constructor(id: number, private admins: string[]) {
+        super(id, 'IT');
+    }
+}
+
+class MyAccountingDepartment extends MyDepartment {
+    constructor(id: number, private reports: string[]) {
+        super(id, 'Accounting');
+    }
+
+    addReport(text: string) {
+        this.reports.push(text);
+    }
+
+    printReports(){
+        console.log(this.reports);
+    }
+}
+
+/////IT
+const newItDepartment = new MyITDepartment(Date.now(), ['Max']);
+newItDepartment.addEmployee('Vik');
+console.log(newItDepartment);
+
+//////Accounting
+const newAccDepartment = new MyAccountingDepartment(Date.now(), []);
+newAccDepartment.addReport('Something went wrong...');
+newAccDepartment.addEmployee('Alen');
+newAccDepartment.printReports();
+console.log(newAccDepartment);
