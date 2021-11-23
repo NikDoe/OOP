@@ -1,51 +1,45 @@
-class MyDepartment {
-    private employees: string[] = [];
+class Human {
+    //обьяснить про protected, и отличие от private
+    protected employees: string[] = [];
 
-    constructor(private id: number, public name: string) {
+    constructor(private id: number, protected type: string) {
     }
 
-    describe(this: MyDepartment) {
-        console.log(`my department ${this.id} : ${this.name}`)
+    sayHi(this: Human) {
+        console.log(`привет я ${this.type}`);
     }
 
     addEmployee(employee: string) {
         this.employees.push(employee);
     }
+}
 
-    printInfo() {
-        console.log(this.employees.length);
-        console.log(this.employees);
+class IOSDeveloper extends Human {
+    constructor(id: number) {
+        super(id, 'IOS разработчик');
+    }
+
+    sayHi() {
+        console.log(`привет я ${this.type}`)
+    }
+
+    addEmployee(name:string) {
+        if(name === 'Alice') {
+            return;
+        }
+        this.employees.push(name);
     }
 }
 
-class MyITDepartment extends MyDepartment {
-    constructor(id: number, private admins: string[]) {
-        super(id, 'IT');
-    }
-}
+/////Human instance
+const newHuman = new Human(Date.now(), 'Человек');
+newHuman.sayHi();
+newHuman.addEmployee('Alice');
+console.log(newHuman);
 
-class MyAccountingDepartment extends MyDepartment {
-    constructor(id: number, private reports: string[]) {
-        super(id, 'Accounting');
-    }
-
-    addReport(text: string) {
-        this.reports.push(text);
-    }
-
-    printReports(){
-        console.log(this.reports);
-    }
-}
-
-/////IT
-const newItDepartment = new MyITDepartment(Date.now(), ['Max']);
-newItDepartment.addEmployee('Vik');
-console.log(newItDepartment);
-
-//////Accounting
-const newAccDepartment = new MyAccountingDepartment(Date.now(), []);
-newAccDepartment.addReport('Something went wrong...');
-newAccDepartment.addEmployee('Alen');
-newAccDepartment.printReports();
-console.log(newAccDepartment);
+/////IOS instance
+const newIOSDeveloper =  new IOSDeveloper(Date.now())
+newIOSDeveloper.sayHi();
+newIOSDeveloper.addEmployee('Alice');
+newIOSDeveloper.addEmployee('Andrew');
+console.log(newIOSDeveloper);
