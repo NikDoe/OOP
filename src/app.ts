@@ -1,45 +1,36 @@
-class Human {
-    //обьяснить про protected, и отличие от private
-    protected employees: string[] = [];
+class AccDepartment {
+    private lastReport: string;
 
-    constructor(private id: number, protected type: string) {
-    }
-
-    sayHi(this: Human) {
-        console.log(`привет я ${this.type}`);
-    }
-
-    addEmployee(employee: string) {
-        this.employees.push(employee);
-    }
-}
-
-class IOSDeveloper extends Human {
-    constructor(id: number) {
-        super(id, 'IOS разработчик');
-    }
-
-    sayHi() {
-        console.log(`привет я ${this.type}`)
-    }
-
-    addEmployee(name:string) {
-        if(name === 'Alice') {
-            return;
+    //обьяснить для чего геттеры нужны
+    get mostRecentReport(){
+        if(this.lastReport){
+            return this.lastReport;
         }
-        this.employees.push(name);
+        throw new Error('No report found');
+    }
+
+    //обьяснить для чего сеттеры нужны
+    set mostRecentReport(value: string) {
+        if(!value){
+            throw new Error('Please pass in a valid value');
+        }
+        this.addReport(value);
+    }
+
+    constructor(private id: number, protected reports: string[]) {
+        this.lastReport = reports[0];
+    }
+
+    addReport(text: string){
+        this.reports.push(text);
+        this.lastReport = text;
     }
 }
 
-/////Human instance
-const newHuman = new Human(Date.now(), 'Человек');
-newHuman.sayHi();
-newHuman.addEmployee('Alice');
-console.log(newHuman);
-
-/////IOS instance
-const newIOSDeveloper =  new IOSDeveloper(Date.now())
-newIOSDeveloper.sayHi();
-newIOSDeveloper.addEmployee('Alice');
-newIOSDeveloper.addEmployee('Andrew');
-console.log(newIOSDeveloper);
+const newAccDep = new AccDepartment(Date.now(), []);
+// console.log(newAccDep.mostRecentReport); //Error
+// newAccDep.mostRecentReport = ''; //Error
+newAccDep.mostRecentReport = 'Year end Report';
+newAccDep.addReport('some text report');
+console.log(newAccDep.mostRecentReport)
+console.log(newAccDep);
