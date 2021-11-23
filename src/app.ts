@@ -1,36 +1,45 @@
-class AccDepartment {
-    private lastReport: string;
+////Common example
+console.log(Math.PI);
 
-    //обьяснить для чего геттеры нужны
-    get mostRecentReport(){
-        if(this.lastReport){
-            return this.lastReport;
-        }
-        throw new Error('No report found');
+class MyClass {
+    static x = 0;
+    static printX() {
+        console.log(this.x);
     }
 
-    //обьяснить для чего сеттеры нужны
-    set mostRecentReport(value: string) {
-        if(!value){
-            throw new Error('Please pass in a valid value');
-        }
-        this.addReport(value);
-    }
-
-    constructor(private id: number, protected reports: string[]) {
-        this.lastReport = reports[0];
-    }
-
-    addReport(text: string){
-        this.reports.push(text);
-        this.lastReport = text;
+    printY(){
+        // console.log(this.x) //Error...access to static prop
+        console.log(MyClass.x);
     }
 }
+console.log(MyClass.x);
 
-const newAccDep = new AccDepartment(Date.now(), []);
-// console.log(newAccDep.mostRecentReport); //Error
-// newAccDep.mostRecentReport = ''; //Error
-newAccDep.mostRecentReport = 'Year end Report';
-newAccDep.addReport('some text report');
-console.log(newAccDep.mostRecentReport)
-console.log(newAccDep);
+//основная идея static, недоступность для instance, мы напрямую вызываем static у класса
+MyClass.printX();
+
+//если не static
+const calc = new MyClass();
+calc.printY();
+
+///////////////static with private/protected/public
+class MyNewClass {
+    private static x = 0;
+
+    printX(){
+        console.log(MyNewClass.x);
+    }
+}
+// console.log(MyNewClass.x); //Приватное статическое свойсто доступно теперь только внутри класса
+
+////////////////наследование + static
+class Base {
+    static getGreeting() {
+        return "Hello world";
+    }
+}
+class Derived extends Base {
+    myGreeting = Derived.getGreeting();
+}
+
+const d = new Derived();
+console.log(d.myGreeting);
